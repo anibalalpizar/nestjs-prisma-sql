@@ -54,4 +54,16 @@ export class UsersService {
 
     return this.prisma.user.delete({ where: { id } });
   }
+
+  async updateUserSettingsByUserId(
+    userId: number,
+    data: Prisma.UserSettingsUpdateInput,
+  ) {
+    const findUser = await this.getUserById(userId);
+    if (!findUser) throw new HttpException('User not found', 404);
+    if (!findUser.userSetting)
+      throw new HttpException('User settings not found', 404);
+
+    return this.prisma.userSettings.update({ where: { userId }, data });
+  }
 }

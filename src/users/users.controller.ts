@@ -12,7 +12,11 @@ import {
   ValidationPipe,
 } from '@nestjs/common';
 import { UsersService } from './users.service';
-import { CreateUserDto, UpdateUserDto } from 'src/dtos/User.dto';
+import {
+  CreateUserDto,
+  UpdateUserDto,
+  UpdateUserSettingsDto,
+} from 'src/dtos/User.dto';
 
 @Controller('users')
 export class UsersController {
@@ -48,5 +52,16 @@ export class UsersController {
   @Delete(':id')
   deleteUserById(@Param('id', ParseIntPipe) id: number) {
     return this.usersService.deleteUserById(id);
+  }
+
+  @Patch(':id/settings')
+  updateUserSettingsByUserId(
+    @Param('id', ParseIntPipe) id: number,
+    @Body() updateUserSettingsDto: UpdateUserSettingsDto,
+  ) {
+    return this.usersService.updateUserSettingsByUserId(
+      id,
+      updateUserSettingsDto,
+    );
   }
 }
