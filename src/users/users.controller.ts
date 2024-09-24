@@ -2,6 +2,9 @@ import {
   Body,
   Controller,
   Get,
+  HttpException,
+  Param,
+  ParseIntPipe,
   Post,
   UsePipes,
   ValidationPipe,
@@ -22,5 +25,12 @@ export class UsersController {
   @Get()
   getUsers() {
     return this.usersService.getUsers();
+  }
+
+  @Get(':id')
+  async getUserById(@Param('id', ParseIntPipe) id: number) {
+    const userFound = await this.usersService.getUserById(id);
+    if (!userFound) throw new HttpException('User not found', 404);
+    return userFound;
   }
 }
