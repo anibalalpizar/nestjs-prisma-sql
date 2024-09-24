@@ -1,11 +1,12 @@
 import {
   Body,
   Controller,
+  Get,
   Post,
   UsePipes,
   ValidationPipe,
 } from '@nestjs/common';
-import { CreatePostDto } from '../dtos/Post.dto';
+import { CreateGroupPostDto, CreatePostDto } from '../dtos/Post.dto';
 import { PostService } from './posts.services';
 
 @Controller('posts')
@@ -16,5 +17,18 @@ export class PostController {
   @UsePipes(ValidationPipe)
   createPost(@Body() { userId, ...createPostData }: CreatePostDto) {
     return this.postService.createPost(userId, createPostData);
+  }
+
+  @Post('group')
+  @UsePipes(ValidationPipe)
+  createGroupPost(
+    @Body() { userIds, ...createGroupPostData }: CreateGroupPostDto,
+  ) {
+    return this.postService.createGroupPost(userIds, createGroupPostData);
+  }
+
+  @Get('group')
+  getGroupPosts() {
+    return this.postService.getGroupPosts();
   }
 }

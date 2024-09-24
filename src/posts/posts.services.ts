@@ -11,4 +11,21 @@ export class PostService {
       data: { ...data, userId },
     });
   }
+
+  createGroupPost(usersIds: number[], data: any) {
+    return this.prisma.groupPost.create({
+      data: {
+        ...data,
+        users: {
+          create: usersIds.map((id) => ({ user: { connect: { id } } })),
+        },
+      },
+    });
+  }
+
+  getGroupPosts() {
+    return this.prisma.groupPost.findMany({
+      include: { users: { select: { user: true } } },
+    });
+  }
 }
