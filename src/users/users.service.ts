@@ -10,6 +10,8 @@ export class UsersService {
     return this.prisma.user.create({ data });
   }
 
-  getUsers() {}
+  getUsers() {
+    return this.prisma.user.findMany();
+  }
   getUserById() {}
 }
