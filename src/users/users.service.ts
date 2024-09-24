@@ -29,6 +29,7 @@ export class UsersService {
       where: { id },
       include: {
         userSetting: { select: { smsEnabled: true, notificationsOn: true } },
+        post: true,
       },
     });
   }
