@@ -9,3 +9,13 @@ export class CreateUserDto {
   @IsOptional()
   displayName?: string;
 }
+
+export class UpdateUserDto {
+  @IsString()
+  @IsOptional()
+  username?: string;
+
+  @IsString()
+  @IsOptional()
+  displayName?: string;
+}
